@@ -8,25 +8,27 @@ export type ISessionProps = {
     user: RucioUser
 }
 const withSession = <P extends {}>(WrappedComponent: React.ComponentType<P & ISessionProps>) => {
-    const router = useRouter()
-    
-    const { user } = useUser({
-        redirectTo: "/login",
-        redirectIfFound: false,
-    })
+    return (props: P) => {
+        const router = useRouter()
+
+        const { user } = useUser({
+            redirectTo: "/login",
+            redirectIfFound: false,
+        })
 
 
-    if (!user || !user.rucioAuthToken) {
-        router.push('/login')
-        return null
+        if (!user || !user.rucioAuthToken) {
+            router.push('/login')
+            return null
+        }
+
+        const WrappedComponentWithSession = (props: P) => {
+            // At this point, the props being passed in are the original props the component expects.
+            return <WrappedComponent user={user} {...props}/>;
+        };
+
+        return WrappedComponentWithSession;
     }
-
-    const WrappedComponentWithSession = (props: P) => {
-        // At this point, the props being passed in are the original props the component expects.
-        return <WrappedComponent {...props} user={user} />;
-    };
-
-    return WrappedComponentWithSession;
 }
 
 export default withSession
