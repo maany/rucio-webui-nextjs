@@ -1,3 +1,16 @@
 {
-  "extends": "next/core-web-vitals"
+  "$schema": "http://json.schemastore.org/eslintrc",
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:react-hooks/recommended"
+  ],
+  "plugins": [
+    "react-hooks"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": ["warn", {
+      "additionalHooks": "useUser"
+    }]
+  }
 }

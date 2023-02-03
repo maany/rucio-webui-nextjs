@@ -1,26 +1,32 @@
 'use-client'
+import { RucioUser } from "@/lib/core/entity/auth-models"
 import useUser from "@/lib/infrastructure/hooks/useUser"
 import { useRouter } from "next/navigation"
-import { FC } from "react"
+import React from "react"
 
-const withSession = (WrappedComponent: FC) => {
-    return (props: any) => {
-        const { user } = useUser({
-            redirectTo: "/login",
-            redirectIfFound: false,
-        })
-
-        const router = useRouter()
+export type ISessionProps = {
+    user: RucioUser
+}
+const withSession = <P extends {}>(WrappedComponent: React.ComponentType<P & ISessionProps>) => {
+    const router = useRouter()
     
-        if (!user || !user.rucioAuthToken) {
-            router.push('/login')
-            return null
-        }
+    const { user } = useUser({
+        redirectTo: "/login",
+        redirectIfFound: false,
+    })
 
-        return (
-            <WrappedComponent user={user} {...props}/>
-        )
+
+    if (!user || !user.rucioAuthToken) {
+        router.push('/login')
+        return null
     }
+
+    const WrappedComponentWithSession = (props: P) => {
+        // At this point, the props being passed in are the original props the component expects.
+        return <WrappedComponent {...props} user={user} />;
+    };
+
+    return WrappedComponentWithSession;
 }
 
 export default withSession
