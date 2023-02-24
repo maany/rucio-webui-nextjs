@@ -1,9 +1,8 @@
-from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Dict
-from git import Repo
-from github import Github
-
+from git import Commit, Repo
+from github import Github, Repository, Branch as branch
+from typing import List
 
 class LocalRepo(Repo):
     def __init__(self, path: Path, upstream: str, github_token: str ):
@@ -60,3 +59,16 @@ class RemoteRepo():
     @property
     def client(self) -> Github:
         return self._client
+
+    @property
+    def repo(self) -> Repository:
+        return self.client.get_repo(f"{self.org_name}/{self.repo_name}")
+    
+    @property
+    def release_branches(self) -> List[branch.Branch]:
+        """Returns a dictionary of release branches and their latest commit hashes."""
+        return [branch for branch in self.repo.get_branches() if branch.name.startswith("feature-")]
+
+    def get_release_branch_commit_map(self) -> Dict[branch.Branch, Commit]:
+        """Returns a dictionary of release branches and their latest commit hashes."""
+        return {branch.name: branch.commit for branch in self.release_branches}

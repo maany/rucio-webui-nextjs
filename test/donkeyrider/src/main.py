@@ -38,4 +38,4 @@ def init(path: Path, upstream, upstream_rucio, upstream_containers, github_token
     # click.echo(f"Repository type: {webui_local_repo.head}")
 
 if __name__ == "__main__":
-    init(["--path", "../../"])
+    init(["--path", "../../", "--upstream", "maany/rucio-webui-nextjs"])
