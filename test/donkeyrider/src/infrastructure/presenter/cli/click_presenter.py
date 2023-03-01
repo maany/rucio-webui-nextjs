@@ -4,9 +4,8 @@ from src.core.ports.primary.use_case_output_port import UseCaseOutputPort
 
 
 class ClickPresenter(UseCaseOutputPort):
-    def __init__(self, context):
-        self.click_context = context
-
+    def __init__(self):
+        pass
     def success(self, response: UseCaseResponseModel):
         click.echo(response.message)
         click.echo(response.data)

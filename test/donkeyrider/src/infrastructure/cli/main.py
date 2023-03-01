@@ -3,7 +3,9 @@ import sys
 import click
 from src.core.models import LocalRepo
 import os
+from src.infrastructure.config.ioc import IoCContainer
 
+from src.infrastructure.controller.webui_repo_controller import WebUIRepoController
 
 @click.group()
 def cli():
@@ -33,9 +35,9 @@ def init(path: Path, upstream, upstream_rucio, upstream_containers, github_token
         sys.exit("A valid Github token is required. Please specify it with the --github-token option or set the GITHUB_TOKEN environment variable.")
     
     print(f"Initializing repository at {path}...")
-    webui_local_repo = LocalRepo(path, upstream, github_token)
+    controller = IoCContainer.webui_repo_controller()
+    controller.handle(path, upstream)
     click.echo("Repository initialized")
-    # click.echo(f"Repository type: {webui_local_repo.head}")
 
 if __name__ == "__main__":
     init(["--path", "../../", "--upstream", "maany/rucio-webui-nextjs"])
