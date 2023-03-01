@@ -81,7 +81,7 @@ setup(
     # py_modules=['mypackage'],
 
     entry_points={
-        'console_scripts': ['donkeyrider=src.main:cli'],
+        'console_scripts': ['donkeyrider=src.infrastructure.cli.main:cli'],
     },
     install_requires=REQUIRED,
     package_data={'': ['__version__.py']},

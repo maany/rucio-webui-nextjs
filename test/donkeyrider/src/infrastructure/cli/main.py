@@ -1,7 +1,7 @@
 from pathlib import Path
 import sys
 import click
-from src.api.repos import LocalRepo
+from src.core.models import LocalRepo
 import os
 
 

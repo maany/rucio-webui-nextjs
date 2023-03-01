@@ -36,13 +36,21 @@ class LocalRepo(Repo):
 
     def get_closest_release_family(self) -> str:
         """Returns the closest release family to the current HEAD."""
-        pass
+        release_branch_commit_map = self.upstream.get_release_branch_commit_map()
+        git_history = self.iter_commits()
+        for commit in git_history:
+            for branch_name, branch_commit in release_branch_commit_map.items():
+                if commit.hexsha == branch_commit.sha:
+                    return branch_name
+        return None
 
     def __str__(self):
         return f"LocalRepo({self.path})"
     
 
 class RemoteRepo():
+    """ __summary__  A class to represent a remote repository on Github.
+    """
     def __init__(self, org, repo, github_token: str):
         self._org_name, self._repo_name = org, repo
         self._github_token = github_token
