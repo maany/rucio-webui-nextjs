@@ -13,7 +13,6 @@ export const Tabs = ({
         setActivestate(active)
     }, [active])
     var onClick = (event: any) => {
-        // console.log(event.target.id)
         setActivestate(event.target.id)
         handleClick?.(event)
     }
@@ -28,7 +27,7 @@ export const Tabs = ({
                     >
                         <a
                             id={index.toString()}
-                            className="block border-b-4 text-blue-500 border-blue-500 p-4 hover:bg-gray-100 hover:cursor-pointer"
+                            className="block border-b-4 text-blue-500 border-blue-500 p-4 hover:bg-gray-100 dark:hover:bg-transparent hover:cursor-pointer"
                         >
                             {element}
                         </a>
@@ -41,7 +40,7 @@ export const Tabs = ({
                     >
                         <a
                             id={index.toString()}
-                            className="block border-b-4 text-gray-600 border-gray-300 p-4 hover:bg-gray-100 hover:cursor-pointer"
+                            className="block border-b-4 text-gray-600 dark:text-gray-100 border-gray-300 dark:border-gray-100 p-4 hover:bg-gray-100 dark:hover:bg-transparent hover:cursor-pointer"
                         >
                             {element}
                         </a>

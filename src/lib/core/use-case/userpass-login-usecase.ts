@@ -14,6 +14,7 @@ class UserPassLoginUseCase implements UserPassLoginInputPort {
         private authServer: AuthServerGatewayOutputPort
     ) {
         this.presenter = presenter;
+        this.authServer = authServer;
     }
     async execute(request: UserpassLoginRequest): Promise<void> {
         const dto = await this.authServer.userpassLogin(request.username, request.password, request.account)
@@ -22,6 +23,7 @@ class UserPassLoginUseCase implements UserPassLoginInputPort {
                 rucioIdentity: request.username,
                 rucioAccount: dto.account,
                 rucioAuthToken: dto.authToken,
+                rucioAuthTokenExpires: dto.authTokenExpires,
             }
             await this.presenter.presentSuccess(responseModel)
             return;

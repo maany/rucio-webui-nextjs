@@ -4,6 +4,7 @@
  */
 export type SessionUser = {
     rucioAuthToken: string
+    rucioAuthTokenExpires: string
     rucioAccount: string
     rucioIdentity: string
     rucioAuthType: 'x509' | 'userpass' | 'oidc' | null
@@ -16,16 +17,16 @@ export type SessionUser = {
  */
 export type OIDCProvider = {
     name: string;
-    url: string;
-    icon: string;
+    url?: string | null;
+    iconUrl?: string | null;
     clientId: string;
     clientSecret: string;
     authorizationUrl: string;
-    refreshTokenUrl: string;
+    refreshTokenUrl?: string;
     redirectUrl: string;
     tokenUrl: string;
-    userInfoUrl: string;
-    scope: string;
+    userInfoUrl?: string;
+    scopes?: string[];
 };
 
 /**
@@ -34,4 +35,7 @@ export type OIDCProvider = {
 export type VO = {
     name: string;
     shortName: string;
+    logoUrl: string;
+    oidcEnabled: boolean;
+    oidcProviders: OIDCProvider[];
 }
